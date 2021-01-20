@@ -1,0 +1,4 @@
+class BaseElement {
+  type = ''
+  constructor() {}
+}
