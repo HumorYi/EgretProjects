@@ -87,7 +87,27 @@ class GameData {
     return GameData.mapData[row][col]
   }
 
+  static getMapItemByIndex(index: number) {
+    return GameData.mapData[GameData.getRowIndex(index)][GameData.getColIndex(index)]
+  }
+
   static hadMapItem(item: number) {
     return item !== -1
+  }
+
+  static getRowIndex(index: number) {
+    return Math.floor(index / GameData.MaxColumn)
+  }
+
+  static getColIndex(index: number) {
+    return index % GameData.MaxRow
+  }
+
+  static setMapItem(row: number, col: number, val: any) {
+    GameData.mapData[row][col] = val
+  }
+
+  static setMapItemByIndex(index, val: any) {
+    GameData.setMapItem(GameData.getRowIndex(index), GameData.getColIndex(index), val)
   }
 }

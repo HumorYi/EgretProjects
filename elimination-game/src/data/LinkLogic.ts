@@ -63,197 +63,173 @@ class LinkLogic {
     LinkLogic.lines.push(line)
   }
 
+  static isEqualMapType(currentMapItem, compareMapItem) {
+    return (
+      compareMapItem &&
+      GameData.hadMapItem(compareMapItem) &&
+      GameData.elements[compareMapItem].type === GameData.elements[currentMapItem].type
+    )
+  }
+
   static isNextHaveLine() {
     for (let row = 0; row < GameData.MaxRow; row++) {
       for (let col = 0; col < GameData.MaxColumn; col++) {
         const currentMapItem = GameData.getMapItem(row, col)
+
+        // 当前地图项无效，跳过后续有效执行过程
+        if (!GameData.hadMapItem(currentMapItem)) {
+          continue
+        }
+
         // 当前地图项有效，寻找周围的六个点
-        if (GameData.hadMapItem(currentMapItem)) {
-          // 纵向判断-列没到右边界
-          if (col < GameData.MaxColumn - 1) {
-            const rightMapItem = GameData.getMapItem(row, col + 1)
+        // 纵向判断-列没到右边界，右侧地图有效 且 与当前地图类型相等
+        if (
+          col < GameData.MaxColumn - 1 &&
+          LinkLogic.isEqualMapType(currentMapItem, GameData.getMapItem(row, col + 1))
+        ) {
+          // 左侧地图可使用，即判断左侧地图 上、下、左边是否与当前地图类型一致
+          if (col > 0 && GameData.hadMapItem(GameData.getMapItem(row, col - 1))) {
+            // 左上
+            if (row > 0 && LinkLogic.isEqualMapType(currentMapItem, GameData.getMapItem(row - 1, col - 1))) {
+              return true
+            }
 
-            // 右侧地图有效 且 与当前地图类型相等
+            // 左下
             if (
-              GameData.hadMapItem(rightMapItem) &&
-              GameData.elements[currentMapItem].type === GameData.elements[rightMapItem].type
+              row < GameData.MaxRow - 1 &&
+              LinkLogic.isEqualMapType(currentMapItem, GameData.getMapItem(row + 1, col - 1))
             ) {
-              // 左侧地图可使用，及判断左侧地图 上、下、左边是否与当前地图类型一致
-              if (col > 0 && GameData.hadMapItem(GameData.getMapItem(row, col - 1))) {
-                // 左上地图类型 与 当前地图类型一致
-                if (row > 0) {
-                  const leftTopMapItem = GameData.getMapItem(row - 1, col - 1)
+              return true
+            }
 
-                  if (
-                    leftTopMapItem &&
-                    GameData.hadMapItem(leftTopMapItem) &&
-                    GameData.elements[leftTopMapItem].type === GameData.elements[currentMapItem].type
-                  ) {
-                    return true
-                  }
-                }
-
-                // 左下地图类型 与 当前地图类型一致
-                if (row < GameData.MaxRow - 1) {
-                  const leftBottomMapItem = GameData.getMapItem(row + 1, col - 1)
-
-                  if (
-                    GameData.hadMapItem(leftBottomMapItem) &&
-                    GameData.elements[leftBottomMapItem].type === GameData.elements[currentMapItem].type
-                  ) {
-                    return true
-                  }
-                }
-
-                // 左左地图类型 与 当前地图类型一致
-                if (col > 1) {
-                  const leftLeftMapItem = GameData.getMapItem(row, col - 2)
-
-                  if (
-                    GameData.hadMapItem(leftLeftMapItem) &&
-                    GameData.elements[leftLeftMapItem].type === GameData.elements[currentMapItem].type
-                  ) {
-                    return true
-                  }
-                }
-              }
-
-              // 右右侧地图可使用，及判断右右侧地图 上、下、右边是否与当前地图类型一致
-              if (col < GameData.MaxColumn - 2 && GameData.hadMapItem(GameData.getMapItem(row, col + 2))) {
-                // 右上地图类型 与 当前地图类型一致
-                if (row > 0) {
-                  const rightRightTopMapItem = GameData.getMapItem(row - 1, col + 2)
-
-                  if (
-                    rightRightTopMapItem &&
-                    GameData.hadMapItem(rightRightTopMapItem) &&
-                    GameData.elements[rightRightTopMapItem].type === GameData.elements[currentMapItem].type
-                  ) {
-                    return true
-                  }
-                }
-
-                // 右下地图类型 与 当前地图类型一致
-                if (row < GameData.MaxRow - 1) {
-                  const rightRightBottomMapItem = GameData.getMapItem(row + 1, col + 2)
-
-                  if (
-                    GameData.hadMapItem(rightRightBottomMapItem) &&
-                    GameData.elements[rightRightBottomMapItem].type === GameData.elements[currentMapItem].type
-                  ) {
-                    return true
-                  }
-                }
-
-                // 右右地图类型 与 当前地图类型一致
-                if (col < GameData.MaxColumn - 3) {
-                  const rightRightRightMapItem = GameData.getMapItem(row, col + 3)
-
-                  if (
-                    GameData.hadMapItem(rightRightRightMapItem) &&
-                    GameData.elements[rightRightRightMapItem].type === GameData.elements[currentMapItem].type
-                  ) {
-                    return true
-                  }
-                }
-              }
+            // 左左
+            if (col > 1 && LinkLogic.isEqualMapType(currentMapItem, GameData.getMapItem(row, col - 2))) {
+              return true
             }
           }
 
-          // 横向判断-行没到下边界
-          if (row < GameData.MaxRow - 1) {
-            const topMapItem = GameData.getMapItem(row + 1, col)
+          // 右右侧地图可使用，即判断右右侧地图 上、下、右边是否与当前地图类型一致
+          if (col < GameData.MaxColumn - 2 && GameData.hadMapItem(GameData.getMapItem(row, col + 2))) {
+            // 右上
+            if (row > 0 && LinkLogic.isEqualMapType(currentMapItem, GameData.getMapItem(row - 1, col + 2))) {
+              return true
+            }
 
-            // 上侧地图有效 且 与当前地图类型相等
+            // 右下
             if (
-              GameData.hadMapItem(topMapItem) &&
-              GameData.elements[currentMapItem].type === GameData.elements[topMapItem].type
+              row < GameData.MaxRow - 1 &&
+              LinkLogic.isEqualMapType(currentMapItem, GameData.getMapItem(row + 1, col + 2))
             ) {
-              // 上侧地图可使用，及判断上侧地图 左、右、上边是否与当前地图类型一致
-              if (row > 0 && GameData.hadMapItem(GameData.getMapItem(row - 1, col))) {
-                // 左上地图类型 与 当前地图类型一致
-                if (col > 0) {
-                  const leftTopMapItem = GameData.getMapItem(row - 1, col - 1)
+              return true
+            }
 
-                  if (
-                    leftTopMapItem &&
-                    GameData.hadMapItem(leftTopMapItem) &&
-                    GameData.elements[leftTopMapItem].type === GameData.elements[currentMapItem].type
-                  ) {
-                    return true
-                  }
-                }
+            // 右右
+            if (
+              col < GameData.MaxColumn - 3 &&
+              LinkLogic.isEqualMapType(currentMapItem, GameData.getMapItem(row, col + 3))
+            ) {
+              return true
+            }
+          }
+        }
 
-                // 右上地图类型 与 当前地图类型一致
-                if (col < GameData.MaxColumn - 1) {
-                  const rightTopMapItem = GameData.getMapItem(row - 1, col + 1)
+        // 横向判断-行没到下边界，上侧地图有效 且 与当前地图类型相等
+        if (row < GameData.MaxRow - 1 && LinkLogic.isEqualMapType(currentMapItem, GameData.getMapItem(row + 1, col))) {
+          // 上侧地图可使用，即判断上侧地图 左、右、上边是否与当前地图类型一致
+          if (row > 0 && GameData.hadMapItem(GameData.getMapItem(row - 1, col))) {
+            // 左上
+            if (col > 0 && LinkLogic.isEqualMapType(currentMapItem, GameData.getMapItem(row - 1, col - 1))) {
+              return true
+            }
 
-                  if (
-                    GameData.hadMapItem(rightTopMapItem) &&
-                    GameData.elements[rightTopMapItem].type === GameData.elements[currentMapItem].type
-                  ) {
-                    return true
-                  }
-                }
+            // 右上
+            if (
+              col < GameData.MaxColumn - 1 &&
+              LinkLogic.isEqualMapType(currentMapItem, GameData.getMapItem(row - 1, col + 1))
+            ) {
+              return true
+            }
 
-                // 上上地图类型 与 当前地图类型一致
-                if (row > 1) {
-                  const topTopMapItem = GameData.getMapItem(row - 2, col)
-
-                  if (
-                    GameData.hadMapItem(topTopMapItem) &&
-                    GameData.elements[topTopMapItem].type === GameData.elements[currentMapItem].type
-                  ) {
-                    return true
-                  }
-                }
-              }
-
-              // 下下侧地图可使用，及判断下下侧地图 左、右、下边是否与当前地图类型一致
-              if (row < GameData.MaxRow - 2 && GameData.hadMapItem(GameData.getMapItem(row + 2, col))) {
-                // 下下左地图类型 与 当前地图类型一致
-                if (col > 0) {
-                  const leftBottomBottomMapItem = GameData.getMapItem(row + 2, col - 1)
-
-                  if (
-                    leftBottomBottomMapItem &&
-                    GameData.hadMapItem(leftBottomBottomMapItem) &&
-                    GameData.elements[leftBottomBottomMapItem].type === GameData.elements[currentMapItem].type
-                  ) {
-                    return true
-                  }
-                }
-
-                // 下下右地图类型 与 当前地图类型一致
-                if (col < GameData.MaxColumn - 1) {
-                  const rightBottomBottomMapItem = GameData.getMapItem(row + 2, col + 1)
-
-                  if (
-                    GameData.hadMapItem(rightBottomBottomMapItem) &&
-                    GameData.elements[rightBottomBottomMapItem].type === GameData.elements[currentMapItem].type
-                  ) {
-                    return true
-                  }
-                }
-
-                // 下下下地图类型 与 当前地图类型一致
-                if (row < GameData.MaxRow - 3) {
-                  const bottomBottomBottomMapItem = GameData.getMapItem(row + 3, col)
-
-                  if (
-                    GameData.hadMapItem(bottomBottomBottomMapItem) &&
-                    GameData.elements[bottomBottomBottomMapItem].type === GameData.elements[currentMapItem].type
-                  ) {
-                    return true
-                  }
-                }
-              }
+            // 上上
+            if (row > 1 && LinkLogic.isEqualMapType(currentMapItem, GameData.getMapItem(row - 2, col))) {
+              return true
             }
           }
 
-          // 如果有两个方块在同一行或同一列，且中间间隔一个空地图
+          // 下下侧地图可使用，即判断下下侧地图 左、右、下边是否与当前地图类型一致
+          if (row < GameData.MaxRow - 2 && GameData.hadMapItem(GameData.getMapItem(row + 2, col))) {
+            // 下下左
+            if (col > 0 && LinkLogic.isEqualMapType(currentMapItem, GameData.getMapItem(row + 2, col - 1))) {
+              return true
+            }
+
+            // 下下右
+            if (
+              col < GameData.MaxColumn - 1 &&
+              LinkLogic.isEqualMapType(currentMapItem, GameData.getMapItem(row + 2, col + 1))
+            ) {
+              return true
+            }
+
+            // 下下下
+            if (
+              row < GameData.MaxRow - 3 &&
+              LinkLogic.isEqualMapType(currentMapItem, GameData.getMapItem(row + 3, col))
+            ) {
+              return true
+            }
+          }
+        }
+
+        // 如果有两个方块在同一行或同一列，且中间间隔一个空地图
+        // 横向判断，右侧底图可用，判断右右侧地图是否与当前地图类型一致
+        if (
+          col < GameData.MaxColumn - 2 &&
+          GameData.hadMapItem(GameData.getMapItem(row, col + 1)) &&
+          LinkLogic.isEqualMapType(currentMapItem, GameData.getMapItem(row, col + 2))
+        ) {
+          // 右上
+          if (row > 0 && LinkLogic.isEqualMapType(currentMapItem, GameData.getMapItem(row - 1, col + 1))) {
+            return true
+          }
+
+          // 右下
+          if (
+            row < GameData.MaxRow - 1 &&
+            LinkLogic.isEqualMapType(currentMapItem, GameData.getMapItem(row + 1, col + 1))
+          ) {
+            return true
+          }
+        }
+
+        // 纵向判断，下侧底图可用，判断下下侧地图是否与当前地图类型一致
+        if (
+          row < GameData.MaxRow - 2 &&
+          GameData.hadMapItem(GameData.getMapItem(row + 1, col)) &&
+          LinkLogic.isEqualMapType(currentMapItem, GameData.getMapItem(row + 2, col))
+        ) {
+          // 左下
+          if (col > 0 && LinkLogic.isEqualMapType(currentMapItem, GameData.getMapItem(row + 1, col - 1))) {
+            return true
+          }
+
+          // 右下
+          if (
+            col < GameData.MaxColumn - 1 &&
+            LinkLogic.isEqualMapType(currentMapItem, GameData.getMapItem(row + 1, col + 1))
+          ) {
+            return true
+          }
         }
       }
     }
+
+    return false
+  }
+
+  static isMoveLineByIndex(p1: number, p2: number) {
+    // 交换两个地图元素的值
+    GameData.setMapItemByIndex(p1, GameData.getMapItemByIndex(p2))
+    GameData.setMapItemByIndex(p2, GameData.getMapItemByIndex(p1))
   }
 }
