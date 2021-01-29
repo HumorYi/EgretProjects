@@ -1,140 +1,238 @@
 {
-	"groups": [
+	"groups":[{
+			"keys":"level_0002_background_png,level_0002_foreground_png,level_0003_foreground_png,level_0004_foreground_png,level_0005_background_png,level_0005_foreground_png,level1_json,levelregbg_png,number_fnt,numberdisable_fnt,success_png,tongse_png,tongseactive_png,tongsedisable_png,zhadan_png,zhadanactive_png,zhadandisable_png,zhenghang_png,zhenghangactive_png,zhenghangdisable_png,zhenglie_png,zhenglieactive_png,zhengliedisable_png,chanzi_png,chanziactive_png,chanzidisable_png,checkmark_png,e0_png,e0foucs_png,e1_png,e1foucs_png,e2_png,e2foucs_png,e3_png,e3foucs_png,e4_png,e4foucs_png,e5_png,e5foucs_png,elementbg1_png,elementbg2_png,fail_png,foucsmc_png,gameovertitle_png,level_0001_background_png,level_0001_foreground_png",
+			"name":"game"
+		}],
+	"resources":[
 		{
-			"keys": "checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,button_down_png,button_up_png,thumb_pb_png,track_pb_png,track_sb_png,bg_jpg,egret_icon_png,description_json",
-			"name": "preload"
-		}
-	],
-	"resources": [
-		{
-			"url": "assets/CheckBox/checkbox_select_disabled.png",
-			"type": "image",
-			"name": "checkbox_select_disabled_png"
+			"name":"level_0002_background_png",
+			"type":"image",
+			"url":"res/level_0002_background.png"
 		},
 		{
-			"url": "assets/CheckBox/checkbox_select_down.png",
-			"type": "image",
-			"name": "checkbox_select_down_png"
+			"name":"level_0002_foreground_png",
+			"type":"image",
+			"url":"res/level_0002_foreground.png"
 		},
 		{
-			"url": "assets/CheckBox/checkbox_select_up.png",
-			"type": "image",
-			"name": "checkbox_select_up_png"
+			"name":"level_0003_foreground_png",
+			"type":"image",
+			"url":"res/level_0003_foreground.png"
 		},
 		{
-			"url": "assets/CheckBox/checkbox_unselect.png",
-			"type": "image",
-			"name": "checkbox_unselect_png"
+			"name":"level_0004_foreground_png",
+			"type":"image",
+			"url":"res/level_0004_foreground.png"
 		},
 		{
-			"url": "assets/ItemRenderer/selected.png",
-			"type": "image",
-			"name": "selected_png"
+			"name":"level_0005_background_png",
+			"type":"image",
+			"url":"res/level_0005_background.png"
 		},
 		{
-			"url": "assets/Panel/border.png",
-			"type": "image",
-			"name": "border_png"
+			"name":"level_0005_foreground_png",
+			"type":"image",
+			"url":"res/level_0005_foreground.png"
 		},
 		{
-			"url": "assets/Panel/header.png",
-			"type": "image",
-			"name": "header_png"
+			"name":"level1_json",
+			"type":"json",
+			"url":"res/level1.json"
 		},
 		{
-			"url": "assets/RadioButton/radiobutton_select_disabled.png",
-			"type": "image",
-			"name": "radiobutton_select_disabled_png"
+			"name":"levelregbg_png",
+			"type":"image",
+			"url":"res/levelregbg.png"
 		},
 		{
-			"url": "assets/RadioButton/radiobutton_select_down.png",
-			"type": "image",
-			"name": "radiobutton_select_down_png"
+			"name":"number_fnt",
+			"type":"font",
+			"url":"res/number.fnt"
 		},
 		{
-			"url": "assets/RadioButton/radiobutton_select_up.png",
-			"type": "image",
-			"name": "radiobutton_select_up_png"
+			"name":"numberdisable_fnt",
+			"type":"font",
+			"url":"res/numberdisable.fnt"
 		},
 		{
-			"url": "assets/RadioButton/radiobutton_unselect.png",
-			"type": "image",
-			"name": "radiobutton_unselect_png"
+			"name":"success_png",
+			"type":"image",
+			"url":"res/success.png"
 		},
 		{
-			"url": "assets/ScrollBar/roundthumb.png",
-			"type": "image",
-			"name": "roundthumb_png"
+			"name":"tongse_png",
+			"type":"image",
+			"url":"res/tongse.png"
 		},
 		{
-			"url": "assets/Slider/thumb.png",
-			"type": "image",
-			"name": "thumb_png"
+			"name":"tongseactive_png",
+			"type":"image",
+			"url":"res/tongseactive.png"
 		},
 		{
-			"url": "assets/Slider/track.png",
-			"type": "image",
-			"name": "track_png"
+			"name":"tongsedisable_png",
+			"type":"image",
+			"url":"res/tongsedisable.png"
 		},
 		{
-			"url": "assets/Slider/tracklight.png",
-			"type": "image",
-			"name": "tracklight_png"
+			"name":"zhadan_png",
+			"type":"image",
+			"url":"res/zhadan.png"
 		},
 		{
-			"url": "assets/ToggleSwitch/handle.png",
-			"type": "image",
-			"name": "handle_png"
+			"name":"zhadanactive_png",
+			"type":"image",
+			"url":"res/zhadanactive.png"
 		},
 		{
-			"url": "assets/ToggleSwitch/off.png",
-			"type": "image",
-			"name": "off_png"
+			"name":"zhadandisable_png",
+			"type":"image",
+			"url":"res/zhadandisable.png"
 		},
 		{
-			"url": "assets/ToggleSwitch/on.png",
-			"type": "image",
-			"name": "on_png"
+			"name":"zhenghang_png",
+			"type":"image",
+			"url":"res/zhenghang.png"
 		},
 		{
-			"url": "assets/Button/button_down.png",
-			"type": "image",
-			"name": "button_down_png"
+			"name":"zhenghangactive_png",
+			"type":"image",
+			"url":"res/zhenghangactive.png"
 		},
 		{
-			"url": "assets/Button/button_up.png",
-			"type": "image",
-			"name": "button_up_png"
+			"name":"zhenghangdisable_png",
+			"type":"image",
+			"url":"res/zhenghangdisable.png"
 		},
 		{
-			"url": "assets/ProgressBar/thumb_pb.png",
-			"type": "image",
-			"name": "thumb_pb_png"
+			"name":"zhenglie_png",
+			"type":"image",
+			"url":"res/zhenglie.png"
 		},
 		{
-			"url": "assets/ProgressBar/track_pb.png",
-			"type": "image",
-			"name": "track_pb_png"
+			"name":"zhenglieactive_png",
+			"type":"image",
+			"url":"res/zhenglieactive.png"
 		},
 		{
-			"url": "assets/ScrollBar/track_sb.png",
-			"type": "image",
-			"name": "track_sb_png"
+			"name":"zhengliedisable_png",
+			"type":"image",
+			"url":"res/zhengliedisable.png"
 		},
 		{
-			"url": "assets/bg.jpg",
-			"type": "image",
-			"name": "bg_jpg"
+			"name":"chanzi_png",
+			"type":"image",
+			"url":"res/chanzi.png"
 		},
 		{
-			"url": "assets/egret_icon.png",
-			"type": "image",
-			"name": "egret_icon_png"
+			"name":"chanziactive_png",
+			"type":"image",
+			"url":"res/chanziactive.png"
 		},
 		{
-			"name": "description_json",
-			"type": "json",
-			"url": "config/description.json"
+			"name":"chanzidisable_png",
+			"type":"image",
+			"url":"res/chanzidisable.png"
+		},
+		{
+			"name":"checkmark_png",
+			"type":"image",
+			"url":"res/checkmark.png"
+		},
+		{
+			"name":"e0_png",
+			"type":"image",
+			"url":"res/e0.png"
+		},
+		{
+			"name":"e0foucs_png",
+			"type":"image",
+			"url":"res/e0foucs.png"
+		},
+		{
+			"name":"e1_png",
+			"type":"image",
+			"url":"res/e1.png"
+		},
+		{
+			"name":"e1foucs_png",
+			"type":"image",
+			"url":"res/e1foucs.png"
+		},
+		{
+			"name":"e2_png",
+			"type":"image",
+			"url":"res/e2.png"
+		},
+		{
+			"name":"e2foucs_png",
+			"type":"image",
+			"url":"res/e2foucs.png"
+		},
+		{
+			"name":"e3_png",
+			"type":"image",
+			"url":"res/e3.png"
+		},
+		{
+			"name":"e3foucs_png",
+			"type":"image",
+			"url":"res/e3foucs.png"
+		},
+		{
+			"name":"e4_png",
+			"type":"image",
+			"url":"res/e4.png"
+		},
+		{
+			"name":"e4foucs_png",
+			"type":"image",
+			"url":"res/e4foucs.png"
+		},
+		{
+			"name":"e5_png",
+			"type":"image",
+			"url":"res/e5.png"
+		},
+		{
+			"name":"e5foucs_png",
+			"type":"image",
+			"url":"res/e5foucs.png"
+		},
+		{
+			"name":"elementbg1_png",
+			"type":"image",
+			"url":"res/elementbg1.png"
+		},
+		{
+			"name":"elementbg2_png",
+			"type":"image",
+			"url":"res/elementbg2.png"
+		},
+		{
+			"name":"fail_png",
+			"type":"image",
+			"url":"res/fail.png"
+		},
+		{
+			"name":"foucsmc_png",
+			"type":"image",
+			"url":"res/foucsmc.png"
+		},
+		{
+			"name":"gameovertitle_png",
+			"type":"image",
+			"url":"res/gameovertitle.png"
+		},
+		{
+			"name":"level_0001_background_png",
+			"type":"image",
+			"url":"res/level_0001_background.png"
+		},
+		{
+			"name":"level_0001_foreground_png",
+			"type":"image",
+			"url":"res/level_0001_foreground.png"
 		}
 	]
 }

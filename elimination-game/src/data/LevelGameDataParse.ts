@@ -1,16 +1,16 @@
 class LevelGameDataParse {
-  static levelGameData(val: any) {
+  static parseLevelGameData(val: any) {
     GameData.playerStep = val.step
     GameData.levelStep = val.step
     GameData.elementTypes = val.element
-    GameData.levelBackgroundImageName = val.levelBgImg
+    GameData.levelBackgroundImageName = val.bgImg
 
-    LevelGameDataParse.levelReq(val.levelReq)
+    LevelGameDataParse.parseLevelReq(val.req)
   }
 
-  private static levelReq(val: any) {
+  private static parseLevelReq(val: any) {
     GameData.levelReq.reset()
 
-    val.forEach((item: any) => GameData.levelReq.addElement(item.type, item.num))
+    val.forEach((item: { type: string; num: number }) => GameData.levelReq.addElement(item.type, item.num))
   }
 }

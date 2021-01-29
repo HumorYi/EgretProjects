@@ -24,26 +24,13 @@ class LevelRequire {
 
   // 消除关卡元素，找到对应类型关卡元素，减掉消除关卡元素数量
   changeReqNum(type: string, num: number) {
-    const len = this.getLevelReqNum()
-    for (let i = 0; i < len; i++) {
-      const element = this.reqElements[i]
-      if (element.type === type) {
-        element.num -= num
-        return
-      }
-    }
+    return this.reqElements
+      .filter((reqElement: LevelRequireElement) => reqElement.type === type)
+      .forEach((reqElement: LevelRequireElement) => (reqElement.num -= num))
   }
 
   // 判断是否消除关卡所有元素
   isClear() {
-    const len = this.getLevelReqNum()
-    for (let i = 0; i < len; i++) {
-      const element = this.reqElements[i]
-      if (element.num !== 0) {
-        return false
-      }
-    }
-
-    return true
+    return this.reqElements.every((reqElement: LevelRequireElement) => reqElement.num === 0)
   }
 }

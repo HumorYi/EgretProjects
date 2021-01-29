@@ -1,12 +1,8 @@
 class MapDataParse {
   static createMapData(val: number[]) {
-    const len = val.length
+    val.forEach((item: number) => GameData.setMapItemByIndex(item, -1))
 
-    for (let i = 0; i < len; i++) {
-      GameData.setMapItemByIndex(val[i], -1)
-    }
-
-    GameData.mapUnUsedElementNum = len
-    GameData.mapUseElementNum = GameData.MaxRow * GameData.MaxColumn - len
+    GameData.mapUnUsedElementNum = val.length
+    GameData.mapUseElementNum = GameData.MaxRow * GameData.MaxColumn - GameData.mapUnUsedElementNum
   }
 }

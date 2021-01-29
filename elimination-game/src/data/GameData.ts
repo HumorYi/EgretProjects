@@ -79,15 +79,31 @@ class GameData {
 
   static initStage() {
     // TODO: 暂未找到获取舞台宽高方法，后续更改
-    GameData.stageW = 750
-    GameData.stageH = 1334
+    GameData.stageW = 640
+    GameData.stageH = 1136
   }
 
-  static getMapItem(row: number, col: number) {
+  static loopMapByHorizontal(cb: Function) {
+    for (let row = 0; row < GameData.MaxRow; row++) {
+      for (let col = 0; col < GameData.MaxColumn; col++) {
+        cb && cb(GameData.getMapItem(row, col), row, col)
+      }
+    }
+  }
+
+  static loopMapByVertical(cb: Function) {
+    for (let col = 0; col < GameData.MaxColumn; col++) {
+      for (let row = 0; row < GameData.MaxRow; row++) {
+        cb && cb(GameData.getMapItem(row, col), row, col)
+      }
+    }
+  }
+
+  static getMapItem(row: number, col: number): number {
     return GameData.mapData[row][col]
   }
 
-  static getMapItemByIndex(index: number) {
+  static getMapItemByIndex(index: number): number {
     return GameData.mapData[GameData.getRowIndex(index)][GameData.getColIndex(index)]
   }
 
@@ -103,11 +119,48 @@ class GameData {
     return index % GameData.MaxRow
   }
 
-  static setMapItem(row: number, col: number, val: any) {
+  static setMapItem(row: number, col: number, val: number) {
     GameData.mapData[row][col] = val
   }
 
-  static setMapItemByIndex(index, val: any) {
+  static setMapItemByIndex(index, val: number) {
     GameData.setMapItem(GameData.getRowIndex(index), GameData.getColIndex(index), val)
+  }
+
+  static getGridWidth() {
+    return (GameData.stageW - 40) / GameData.MaxColumn
+  }
+
+  static getGridStartY() {
+    return GameData.stageH - (GameData.stageW - 30) / 6 - 60 - GameData.getGridWidth() * GameData.MaxColumn
+  }
+
+  static getElement(index: number) {
+    return GameData.elements[index]
+  }
+
+  static getElementId(index: number) {
+    return GameData.getElement(index).id
+  }
+
+  static setElementId(index: number, val: number) {
+    GameData.getElement(index).id = val
+  }
+
+  static getElementType(index: number) {
+    return GameData.getElement(index).type
+  }
+
+  static setElementType(index: number, val: string) {
+    console.log('setElementType', typeof val, val)
+    GameData.getElement(index).type = val
+  }
+
+  static getElementLocation(index: number) {
+    return GameData.getElement(index).location
+  }
+
+  static setElementLocation(index: number, val: number) {
+    GameData.getElement(index).location = val
   }
 }

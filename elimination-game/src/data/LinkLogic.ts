@@ -5,17 +5,17 @@ class LinkLogic {
     LinkLogic.lines = []
 
     LinkLogic.handleLine(GameData.MaxRow, GameData.MaxColumn)
-    LinkLogic.handleLine(GameData.MaxColumn, GameData.MaxRow)
+    LinkLogic.handleLine(GameData.MaxColumn, GameData.MaxRow, true)
 
     return LinkLogic.lines.length > 0
   }
 
-  static handleLine(row: number, col: number) {
+  static handleLine(row: number, col: number, isCol = false) {
     let currentType = ''
     let typeNum = 0
 
     const handle = (rowIndex: number, colIndex: number, type = '', num = 0) => {
-      LinkLogic.isLine(typeNum) && LinkLogic.addLine(rowIndex, colIndex, typeNum)
+      LinkLogic.isLine(typeNum) && LinkLogic.addLine(rowIndex, colIndex, typeNum, isCol)
 
       currentType = type
       typeNum = num
@@ -25,7 +25,7 @@ class LinkLogic {
       const mapItem = GameData.getMapItem(rowIndex, colIndex)
 
       if (GameData.hadMapItem(mapItem)) {
-        const type = GameData.elements[mapItem].type
+        const type = GameData.getElementType(mapItem)
 
         if (currentType === type) {
           typeNum++
@@ -39,13 +39,13 @@ class LinkLogic {
       handle(rowIndex, colIndex)
     }
 
-    for (let i = 0, j = 0; i < row; i++) {
-      for (; j < col; j++) {
-        handleLoop(i, j)
+    for (let i = 0; i < row; i++) {
+      for (let j = 0; j < col; j++) {
+        handleLoop(isCol ? j : i, isCol ? i : j)
       }
 
       // 避免在行结尾形成一行，导致错误
-      handle(i, j)
+      handle(isCol ? col : i, isCol ? i : col)
     }
   }
 
@@ -53,11 +53,15 @@ class LinkLogic {
     return typeNum >= 3
   }
 
-  static addLine(row: number, col: number, typeNum: number) {
+  static addLine(row: number, col: number, typeNum: number, isCol: boolean) {
     const line: number[] = []
+    const getIndex = (total, current) => total - current - 1
 
     for (let i = 0; i < typeNum; i++) {
-      line.push(GameData.getMapItem(row, col - i - 1))
+      const rowIndex = isCol ? getIndex(row, i) : row
+      const colIndex = isCol ? col : getIndex(col, i)
+
+      line.push(GameData.getMapItem(rowIndex, colIndex))
     }
 
     LinkLogic.lines.push(line)
@@ -67,7 +71,7 @@ class LinkLogic {
     return (
       compareMapItem &&
       GameData.hadMapItem(compareMapItem) &&
-      GameData.elements[compareMapItem].type === GameData.elements[currentMapItem].type
+      GameData.getElementType(compareMapItem) === GameData.getElementType(currentMapItem)
     )
   }
 
@@ -227,9 +231,74 @@ class LinkLogic {
     return false
   }
 
-  static isMoveLineByIndex(p1: number, p2: number) {
+  static isHaveLineByIndex(p1: number, p2: number) {
+    const p1id = GameData.getMapItemByIndex(p1)
+    const p2id = GameData.getMapItemByIndex(p2)
     // 交换两个地图元素的值
-    GameData.setMapItemByIndex(p1, GameData.getMapItemByIndex(p2))
-    GameData.setMapItemByIndex(p2, GameData.getMapItemByIndex(p1))
+    GameData.setMapItemByIndex(p1, p2id)
+    GameData.setMapItemByIndex(p2, p1id)
+
+    // 判断交换完成后是否能连线
+    const haveLine = LinkLogic.isHaveLine()
+    if (haveLine) {
+      // 交换两个地图元素位置
+      GameData.setElementLocation(p1id, p2)
+      GameData.setElementLocation(p2id, p1)
+    } else {
+      // 交换回两个地图元素的值，即地图保持不变
+      GameData.setMapItemByIndex(p1, p1id)
+      GameData.setMapItemByIndex(p2, p2id)
+    }
+
+    return haveLine
+  }
+
+  /**
+   * 判断两个点是否可以互相移动，关系是否为上下，左右
+   */
+  static canMove(id1: number, id2: number): boolean {
+    const id1Location = GameData.getElementLocation(id1)
+    const id2Location = GameData.getElementLocation(id2)
+
+    const l1row: number = GameData.getRowIndex(id1Location)
+    const l1col: number = GameData.getColIndex(id1Location)
+
+    const l2row: number = GameData.getRowIndex(id2Location)
+    const l2col: number = GameData.getColIndex(id2Location)
+
+    console.log('判断两点互换位置', id1, id1Location, l1row, l1col, '第二个', id2, id2Location, l2row, l2col)
+
+    return (
+      (l1row == l2row && (l1col - l2col == 1 || l1col - l2col == -1)) ||
+      (l1col == l2col && (l1row - l2row == 1 || l1row - l2row == -1))
+    )
+  }
+
+  /**
+   * 洗牌 打乱所有顺序,在没有能连接的情况下使用
+   */
+  static changeOrder(): void {
+    const arr: number[] = new Array()
+
+    GameData.loopMapByHorizontal((mapItem: number) => {
+      if (!GameData.hadMapItem(mapItem)) {
+        return
+      }
+
+      arr.push(mapItem)
+    })
+
+    GameData.loopMapByHorizontal((mapItem: number, row: number, col: number) => {
+      if (!GameData.hadMapItem(mapItem)) {
+        return
+      }
+
+      const index = Math.floor(Math.random() * arr.length)
+
+      GameData.setMapItem(row, col, arr[index])
+      GameData.setElementLocation(arr[index], row * GameData.MaxColumn + col)
+
+      arr.splice(index, 1) //从数组中删除 下标index的元素
+    })
   }
 }
